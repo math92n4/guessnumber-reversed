@@ -62,7 +62,7 @@ function tooLow() {
 }
 
 // if too high button is pressed, we know that the correct answer is lower than the guess took
-// therefore we set the highestPossibleNumber to guess -1 1
+// therefore we set the highestPossibleNumber to guess - 1
 // takes a new guess
 function tooHigh() {
     highestPossibleNumber = guess - 1
