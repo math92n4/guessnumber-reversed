@@ -17,10 +17,11 @@ tooHighButton.addEventListener('click', tooHigh)
 // our <ul>
 const list = document.querySelector('#list');
 
-// our 3 variables
+// our 4 variables
 let lowestPossibleNumber;
 let highestPossibleNumber;
 let guess;
+let numberOfGuesses;
 
 // hide the buttons 
 function hide() {
@@ -34,11 +35,13 @@ function start() {
     list.innerHTML = "";
     lowestPossibleNumber = 1;
     highestPossibleNumber = 100;
+    numberOfGuesses = 0;
     tooLowButton.classList.remove("hide");
     correctButton.classList.remove("hide");
     tooHighButton.classList.remove("hide");
     guessNumber();
 }
+
 
 // calculates the median between two numbers
 function generateNumber() {
@@ -47,10 +50,19 @@ function generateNumber() {
 
 // sets the guess to the median of the two variables
 // and appends a new line to the ul
+// checks if low and high are equal. if they are, game is won or user cheats :)
 function guessNumber() {
+    incrementGuess();
     guess = generateNumber();
-    const html = `<li>My guess is ${guess} - is that correct?</li>`
-    list.insertAdjacentHTML("beforeend", html)
+    if (highestPossibleNumber === lowestPossibleNumber) {
+        const html = `<li>The number you are thinking of must be ${guess}, number of guesses was ${numberOfGuesses}</li>`
+        list.insertAdjacentHTML("beforeend", html);
+        hide();
+    } else {
+        const html = `<li>My guess is ${guess} - is that correct?</li>`
+        list.insertAdjacentHTML("beforeend", html)
+    }
+    
 }
 
 // if too low button is pressed, we know that the correct answer is higher than the guess took
@@ -71,7 +83,11 @@ function tooHigh() {
 
 // displays some text if the guess was correct and calls hide() to hide the buttons
 function correct() {
-    const html = `<li>${guess} was correct! Press "Start" to try again</li>`
+    const html = `<li>${guess} was correct! Number of guesses was ${numberOfGuesses}. Press "Start" to try again</li>`
     list.insertAdjacentHTML("beforeend", html)
     hide();
+}
+
+function incrementGuess() {
+    numberOfGuesses += 1;
 }
